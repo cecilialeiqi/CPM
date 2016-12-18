@@ -311,46 +311,71 @@ int main(int argc, char* argv[]){
 		double timepm=0;
 		double timepca=0;
 		MatrixXd X=Q*Diagonal.cwiseSqrt();
-	    cout<<"Power method:";
+	    cout<<"Power method:"<<flush;
+		int count=1;
 		for (int i=0;i<t;i++){
 			x.setRandom(n,1);
 			timepm+=eigens_pm(A, x,zn,flop);
 			flops+=flop;
+			if (timepm>count){
+				cout<<'-'<<flush;
+				count++;
+			}
 		}
+		count=1;
 		flops/=t;timepm/=t;
 		cout<<endl<< std::fixed << std::setprecision( 8 )
           <<timepm<<" seconds, and "<<flops<<" flops until convergence"<<endl;
-		cout<<"CPM:";
+		cout<<"CPM:"<<flush;
 		for (int i=0;i<t;i++){
 			x.setRandom(n,1);
 			timegpm+=eigens_gpm(A, x,n/20 ,zn,flop);
 			flop1+=flop;
+			if (timegpm>count){
+				cout<<'-'<<flush;
+				count++;
+			}
 		}
 		flop1/=t;timegpm/=t;
 		std::cout << endl<< std::setprecision( 8 )
           << timegpm<<" seconds, and "<<flop1<<" flops until convergence"<<endl;
-		cout<<"SGCD:";
+		cout<<"SGCD:"<<flush;
+		count=1;
 		for (int i=0;i<t;i++){
 			x.setRandom(n,1);
 			timegcd+=eigens_gcd(A, x, n/20,zn,flop);
 			flop2+=flop;
+			if (timegcd>count){
+				cout<<'-'<<flush;
+				count++;
+			}
 		}
+		count=1;
 		flop2/=t;timegcd/=t;
 		std::cout << endl<< std::fixed << std::setprecision( 8 )
           << timegcd<<" seconds, and "<<flop2<<" flops until convergence"<<endl;
-		cout<<"Lanczos:";
+		cout<<"Lanczos:"<<flush;
 		for (int i=0;i<t;i++){
 			x.setRandom(n,1);
 			timelan+=eigens_lanczos(A,x,zn,flop);
 			flop3+=flop;
+			if (timelan>count){
+				cout<<'-'<<flush;
+				count++;
+			}
 		}
+		count=1;
 		flop3/=t;timelan/=t;
 		std::cout << endl<<std::fixed << std::setprecision( 8 )
           << timelan<<" seconds, and "<<flop3<<" flops until convergence"<<endl;
-		cout<<"VRPCA:";
+		cout<<"VRPCA:"<<flush;
 		for (int i=0;i<t;i++){
 			timepca+=eigens_vrpca(A,x,zn,flop);
 			flop4+=flop;
+			if (timepca>count){
+				cout<<'-'<<flush;
+				count++;
+			}
 		}
 		cout<<'\n';
 		flop4/=t;timepca/=t;
