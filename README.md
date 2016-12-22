@@ -1,4 +1,4 @@
-# CPM
+# Coordinate-wise Power Method (CPM)
 
 ## Introduction
 We proposed two methods for computing dominant eigenvector of a given matrix/graph. Coordinate-wise Power Method (CPM) is for general matrices, and Symmetric Greedy Coordinate Descent (SGCD) is for symmetric matrices [1]. This implementation includes the two proposed methods as well as the traditional power method, Lanczos method with early termination, and VRPCA [2] on dense and synthetic dataset.
