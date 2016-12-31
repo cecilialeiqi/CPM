@@ -377,6 +377,6 @@ int main(int argc, char* argv[]){
 	eigens_sgcd(A,x,n/20,zn,time_sgcd);
 	eigens_lanczos(A,x,zn,time_lanczos);
 	eigens_vrpca(A,x,zn,time_vrpca);
-
+	ofile.close();
 	/////////////////////////////////////
 }
