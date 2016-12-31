@@ -8,7 +8,9 @@ We proposed two methods for computing dominant eigenvector of a given matrix/gra
 * make 
 * ./dense [matrix size] [condition number]
 * ./sparse [./data/filename] [matrix size]
+
 	The data format is required to be "node_i node_j" in each line, indicating that nodes i and j are connected. And the nodes should be labeled from 1 to n, the matrix size.
+
 	After running the code, the output file will be saved in result/output.csv. It shows how the accuracy increases over time for the five methods implemented.
 
 ## Reference
