@@ -7,7 +7,7 @@ We proposed two methods for computing dominant eigenvector of a given matrix/gra
 * Install Eigen (http://eigen.tuxfamily.org/index.php?title=Main_Page#Download) and put it in ./lib/
 * make 
 * ./dense [matrix size] [condition number]
-* ./sparse [./data/filename] [matrix size]
+* ./sparse [filename] [matrix size]
 
 	The data format is required to be "node_i node_j" in each line, indicating that nodes i and j are connected. And the nodes should be labeled from 1 to n, the matrix size.
 
