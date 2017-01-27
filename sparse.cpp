@@ -178,10 +178,9 @@ void eigens_vrpca(SpMat & X, VectorXd v0, VectorXd & zn, double & time)
     }
     double eta=1/(tmp.mean()*sqrt(n));
     VectorXd w=v0/v0.norm();
-    VectorXd wrun=w;
     for (int i=0;i<100;i++){
         VectorXd u=X*(X.transpose()*w)/n;
-        for (int j=0;j<m;j++){
+        /*for (int j=0;j<m;j++){
 	        int s=rand()%n;
 			double a=0;
 			for (SparseMatrix<double, ColMajor>::InnerIterator it(X,s); it; ++it)
@@ -192,8 +191,34 @@ void eigens_vrpca(SpMat & X, VectorXd v0, VectorXd & zn, double & time)
 			wrun+=eta*u;
             //wrun+=eta*(X.col(s).dot(wrun-w)*X.col(s)+u);//dense update
             wrun/=wrun.norm();
-        }
-        w=wrun;
+        }//dense update*/
+		double alpha=1;
+		double beta=0;
+		VectorXd g=w;
+		double gamma=g.dot(g);
+		double delta=g.dot(u);
+		double zeta=u.dot(u);
+		for (int j=0;j<m;j++){
+			int s=rand()%n;
+			double a=0;
+			for (SparseMatrix<double, ColMajor>::InnerIterator it(X,s); it; ++it)
+				a+=it.value()*(alpha*g[it.row()]+beta*u[it.row()]-w[it.row()]);
+			SparseVector<double> dg=X.col(s)*eta*a;
+			for (SparseVector<double>::InnerIterator it(dg); it; ++it)
+			{
+				g[it.index()]+=it.value()/alpha;
+			}
+			//g+=dg/alpha;
+			beta+=eta;
+			gamma+=2*alpha*dg.dot(g)+pow(dg.norm(),2);
+			delta+=dg.dot(u);
+			double tmp=sqrt(gamma+2*delta*beta+beta*beta*zeta);
+			alpha/=tmp;
+			beta/=tmp;
+			gamma/=tmp*tmp;
+			delta/=tmp;
+		}
+		w=alpha*g+beta*u;
         time+=omp_get_wtime()-st;
 		c=w.dot(zn);
 	    ofile<< ","<< std::fixed << std::setw( 11 ) << std::setprecision(6)
